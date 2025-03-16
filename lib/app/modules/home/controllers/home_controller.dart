@@ -14,6 +14,7 @@ class HomeController extends GetxController {
 
   final uIDController = TextEditingController();
   final ma2faController = TextEditingController();
+  final mkController = TextEditingController();
 
   var isUID = true.obs;
   var isLoadingUID = false.obs;
@@ -22,6 +23,9 @@ class HomeController extends GetxController {
   var is2FA = true.obs;
   var otpCode = "".obs;
   var isLoading2FA = false.obs;
+
+  RxString mk = ''.obs;
+  RxString ma2fa = ''.obs;
 
   var countdown = 30.obs;
   Timer? timer;
@@ -114,7 +118,6 @@ class HomeController extends GetxController {
       isLoading2FA.value = false;
       countdown.value = 30;
       startCountdown();
-      print("OTP: " + otpCode.value);
       Utils.showSnackbar(
           message: 'Lấy 2FA thành công',
           icon: "assets/icons/circle_check_24px.svg",

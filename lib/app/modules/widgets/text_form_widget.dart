@@ -42,32 +42,33 @@ class TextFormWidget extends StatelessWidget {
           ),
         ],
       ),
-      child: Obx(
-        () => Stack(
-          alignment: Alignment.centerRight,
-          children: [
-            Padding(
-              padding: EdgeInsets.only(
-                  right: showButton != null && showButton! ? 40 : 0),
-              child: TextFormField(
-                controller: controller,
-                keyboardType: textInputType,
-                onChanged: onChanged,
-                decoration: InputDecoration(
-                  hintText: hintText,
-                  border: InputBorder.none,
-                  contentPadding: const EdgeInsets.all(0).r,
-                  hintStyle: TextStyle(
-                    height: 1,
-                    color: Colors.grey, // Thay đổi màu chữ hintText
-                    fontSize: 14.sp, // Kích thước chữ
-                    fontWeight: FontWeight.w100, // Độ đậm của chữ
-                  ),
+      child: Stack(
+        alignment: Alignment.centerRight,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(
+                right: showButton != null && showButton! ? 40 : 0),
+            child: TextFormField(
+              controller: controller,
+              keyboardType: textInputType,
+              onChanged: onChanged,
+              decoration: InputDecoration(
+                hintText: hintText,
+                border: InputBorder.none,
+                contentPadding: const EdgeInsets.all(0).r,
+                hintStyle: TextStyle(
+                  height: 1,
+                  color: Colors.grey, // Thay đổi màu chữ hintText
+                  fontSize: 14.sp, // Kích thước chữ
+                  fontWeight: FontWeight.w100, // Độ đậm của chữ
                 ),
               ),
             ),
-            if (showButton != null && showButton!)
-              IconButton(
+          ),
+          if (showButton != null && showButton!)
+            // Kiểm tra xem suffixIcon có tồn tại hay không
+            Obx(
+              () => IconButton(
                 splashColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onPressed: togglePasswordVisibility,
@@ -75,9 +76,10 @@ class TextFormWidget extends StatelessWidget {
                   obscureText.value ? Icons.paste : Icons.close,
                   color: Colors.grey,
                 ),
-              )
-          ],
-        ),
+              ),
+            ),
+          suffixIcon ?? Container(),
+        ],
       ),
     );
   }
