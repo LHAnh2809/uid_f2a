@@ -87,6 +87,10 @@ class HomeController extends GetxController {
     state.value = controller.text.isEmpty;
   }
 
+  String removeSpaces(String input) {
+    return input.replaceAll(RegExp(r'\s+'), '');
+  }
+
   Future<void> getOTP() async {
     try {
       final key = ma2faController.text.trim();
@@ -97,15 +101,15 @@ class HomeController extends GetxController {
             colors: AppColors.kRrror600Color);
         return;
       }
-
       isLoading2FA.value = true;
       otpCode.value = await OTP.generateTOTPCodeString(
-        ma2faController.text.trim(),
+        removeSpaces(key),
         DateTime.now().millisecondsSinceEpoch,
         interval: 30, // Thời gian mã OTP hợp lệ (mặc định 30 giây)
         length: 6, // Độ dài mã OTP (thường là 6)
         algorithm:
             Algorithm.SHA1, // Thuật toán SHA1 (giống Google Authenticator)
+        isGoogle: true,
       );
       isLoading2FA.value = false;
       countdown.value = 30;
@@ -126,14 +130,17 @@ class HomeController extends GetxController {
   }
 
   void startCountdown() {
+    timer?.cancel(); // Hủy timer cũ nếu có
+    countdown.value = 30; // Reset countdown về 30 giây
+
     timer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (countdown.value > 0) {
         countdown.value--;
       } else {
+        timer.cancel(); // Dừng timer khi hết thời gian
         if (ma2faController.text.trim().isNotEmpty) {
-          getOTP();
+          getOTP(); // Lấy OTP mới sau khi hết thời gian
         } else {
-          timer.cancel(); // Dừng đếm ngược nếu key rỗng
           countdown.value = 0;
         }
       }
