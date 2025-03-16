@@ -44,7 +44,7 @@ dependencies:
   url_launcher: ^6.2.5
   path_provider: ^2.1.5
   loading_animation_widget: ^1.2.1
-  otp: 3.1.2
+  otp: 3.1.4
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -54,7 +54,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^4.0.0
+  flutter_lints: ^5.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

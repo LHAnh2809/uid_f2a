@@ -61,7 +61,7 @@ class TextFormWidget extends StatelessWidget {
                     height: 1,
                     color: Colors.grey, // Thay đổi màu chữ hintText
                     fontSize: 14.sp, // Kích thước chữ
-                    fontWeight: FontWeight.w400, // Độ đậm của chữ
+                    fontWeight: FontWeight.w100, // Độ đậm của chữ
                   ),
                 ),
               ),
