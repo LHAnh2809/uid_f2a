@@ -86,7 +86,13 @@ class HomeController extends GetxController {
       }
     } else {
       controller.clear();
-      uidDataUID.value = "";
+      print("Clipboard is empty");
+      if (ma2faController.text.isNotEmpty) {
+        ma2fa.value = ma2faController.text;
+      }
+    }
+    if (ma2faController.text.isNotEmpty) {
+      ma2fa.value = ma2faController.text;
     }
     state.value = controller.text.isEmpty;
   }
