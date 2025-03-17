@@ -1,11 +1,11 @@
-name: iOS-ipa-build
+name: Build iOS & Android APK
 
 on:
   workflow_dispatch:
 
 jobs:
   build-ios:
-    name: 🎉 iOS Build
+    name: 🎉 Build iOS
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
@@ -14,8 +14,8 @@ jobs:
         with:
           channel: 'stable'
           architecture: x64
+
       - run: flutter pub get
-      
 
       - run: pod repo update
         working-directory: ios
@@ -29,14 +29,39 @@ jobs:
         working-directory: build/ios/iphoneos
 
       - name: Zip output
-        run: zip -qq -r -9 UID_2FA_v1.2.ipa Payload
+        run: zip -qq -r -9 UID_2FA_v1.3.ipa Payload
         working-directory: build/ios/iphoneos
 
-      - name: Upload binaries to release
+      - name: Upload iOS build to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: build/ios/iphoneos/UID_2FA_v1.2.ipa
+          file: build/ios/iphoneos/UID_2FA_v1.3.ipa
+          tag: v1.3
+          overwrite: true
+          body: "fix copy định dạng"
+
+  build-android:
+    name: 🤖 Build Android APK
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          architecture: x64
+
+      - run: flutter pub get
+
+      - name: Build APK
+        run: flutter build apk --release
+
+      - name: Upload APK to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: build/app/outputs/flutter-apk/UID_2FA_v1.3.apk
           tag: v1.3
           overwrite: true
           body: "fix copy định dạng"
