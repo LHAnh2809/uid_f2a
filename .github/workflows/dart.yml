@@ -37,6 +37,6 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: build/ios/iphoneos/UID_2FA_v1.2.ipa
-          tag: v1.2
+          tag: v1.3
           overwrite: true
-          body: "Thêm Định dạng UID|PasssWord|2FA"
+          body: "fix copy định dạng"
